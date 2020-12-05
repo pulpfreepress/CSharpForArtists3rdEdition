@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition; // added
+using System.ComponentModel.Composition.Hosting; // added
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
