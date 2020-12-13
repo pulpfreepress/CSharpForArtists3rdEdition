@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace EngineDemoMEF
 {
-    class Program
+    class MainApp
     {
         static void Main(string[] args)
         {
