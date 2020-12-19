@@ -17,7 +17,7 @@ namespace Engines
         /***** Parts *****/
         [Import(typeof(OilPump))]
         public OilPump _oilPump;
-       
+
         [Import(typeof(FuelPump))]
         private FuelPump _fuelPump;
 
@@ -57,7 +57,7 @@ namespace Engines
 
         public int OilPumpEngineNumber
         {
-            get { return _oilPump.EngineNumber;  }
+            get { return _oilPump.EngineNumber; }
         }
 
         public int FuelPumpEngineNumber
@@ -80,6 +80,57 @@ namespace Engines
             get { return _oxygenSensor.EngineNumber; }
         }
 
+        public bool IsOilPumpWorking
+        {
+            get { return _oilPump.IsWorking; }
+            set {
+                _oilPump.IsWorking = value;
+                if (!IsWorking) StopEngine();
+            }
+        }
+
+        public bool IsFuelPumpWorking
+        {
+            get { return _fuelPump.IsWorking; }
+            set {
+                _fuelPump.IsWorking = value;
+                if (!IsWorking) StopEngine();
+            }
+            
+        }
+
+        public bool IsCompressorWorking
+        {
+            get { return _compressor.IsWorking; }
+            set {
+                _compressor.IsWorking = value;
+                if (!IsWorking) StopEngine();
+
+            }
+            
+        }
+
+        public bool IsTemperatureSensorWorking
+        {
+            get { return _temperatureSensor.IsWorking; }
+            set {
+                _temperatureSensor.IsWorking = value;
+                if (!IsWorking) StopEngine();
+
+            }
+            
+        }
+
+        public bool IsOxygenSensorWorking
+        {
+            get { return _oxygenSensor.IsWorking; }
+            set {
+                _oxygenSensor.IsWorking = value;
+                if (!IsWorking) StopEngine();
+            }
+            
+        }
+
         /***** Constructor *****/
         public Engine(int engine_number)
         {
@@ -91,7 +142,7 @@ namespace Engines
             try
             {
                 this._container.ComposeParts(this);
-                
+
 
             } catch (Exception e)
             {
@@ -100,13 +151,30 @@ namespace Engines
 
         } // end constructor
 
-        public void SetCompressorStatus(PartStatus status) => _compressor.Status = status; 
-        public void SetOilPumpStatus(PartStatus status) => _oilPump.Status = status;
-        public void SetFuelPumpStatus(PartStatus status) => _fuelPump.Status = status;
-        public void SetTemperatureSensorStatus(PartStatus status) => _temperatureSensor.Status = status;
-        public void SetOxygenSensorStatus(PartStatus status) => _oxygenSensor.Status = status;
         
         
+        public string[] CheckEngine()
+        {
+            StringBuilder status_messages = new StringBuilder();
+            if (_oilPump.IsWorking) status_messages.Append("OilPump -> Working,");
+            else status_messages.Append("OilPump -> Falty,");
+
+            if (_fuelPump.IsWorking) status_messages.Append("FuelPump -> Working,");
+            else status_messages.Append("FuelPump -> Falty,");
+
+            if (_compressor.IsWorking) status_messages.Append("Compressor -> Working,");
+            else status_messages.Append("Compressor -> Falty,");
+
+            if (_temperatureSensor.IsWorking) status_messages.Append("TemperatureSensor -> Working,");
+            else status_messages.Append("TemperatureSensor -> Falty,");
+
+            if (_oxygenSensor.IsWorking) status_messages.Append("OxygenSensor -> Working");
+            else status_messages.Append("OxygenSensor -> Falty");
+
+            return status_messages.ToString().Split(',');
+        }
+
+
         public void StartEngine()
         {
             if(!IsRunning)
@@ -120,7 +188,11 @@ namespace Engines
                 }
                 else
                 {
-                    Console.WriteLine("Engine No. {0} has a problem. Check engine!", EngineNumber);
+                    Console.WriteLine("Engine No. {0} has a problem. Checking engine...", EngineNumber);
+                    foreach(string s in CheckEngine())
+                    {
+                        Console.WriteLine(s);
+                    }
                 }
 
             }

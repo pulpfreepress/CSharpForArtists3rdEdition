@@ -29,6 +29,11 @@ namespace EngineParts
             {
                 return Status == PartStatus.WORKING ? true : false;
             }
+            set
+            {
+                if (value) Status = PartStatus.WORKING;
+                else Status = PartStatus.NOT_WORKING;
+            }
         }
 
         [ImportingConstructor]
