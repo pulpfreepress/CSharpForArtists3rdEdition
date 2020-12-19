@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using EngineParts;
+using System;
 using System.ComponentModel.Composition; // added
 using System.ComponentModel.Composition.Hosting; // added
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using EngineParts;
 
 
 namespace Engines
@@ -13,7 +10,6 @@ namespace Engines
     [Export(typeof(Engine))]
     public class Engine
     {
-
         /***** Parts *****/
         [Import(typeof(OilPump))]
         public OilPump _oilPump;
@@ -83,7 +79,8 @@ namespace Engines
         public bool IsOilPumpWorking
         {
             get { return _oilPump.IsWorking; }
-            set {
+            set
+            {
                 _oilPump.IsWorking = value;
                 if (!IsWorking) StopEngine();
             }
@@ -92,43 +89,41 @@ namespace Engines
         public bool IsFuelPumpWorking
         {
             get { return _fuelPump.IsWorking; }
-            set {
+            set
+            {
                 _fuelPump.IsWorking = value;
                 if (!IsWorking) StopEngine();
             }
-            
         }
 
         public bool IsCompressorWorking
         {
             get { return _compressor.IsWorking; }
-            set {
+            set
+            {
                 _compressor.IsWorking = value;
                 if (!IsWorking) StopEngine();
-
             }
-            
         }
 
         public bool IsTemperatureSensorWorking
         {
             get { return _temperatureSensor.IsWorking; }
-            set {
+            set
+            {
                 _temperatureSensor.IsWorking = value;
                 if (!IsWorking) StopEngine();
-
             }
-            
         }
 
         public bool IsOxygenSensorWorking
         {
             get { return _oxygenSensor.IsWorking; }
-            set {
+            set
+            {
                 _oxygenSensor.IsWorking = value;
                 if (!IsWorking) StopEngine();
             }
-            
         }
 
         /***** Constructor *****/
@@ -142,17 +137,15 @@ namespace Engines
             try
             {
                 this._container.ComposeParts(this);
-
-
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 Console.WriteLine(e);
             }
-
         } // end constructor
 
-        
-        
+
+
         public string[] CheckEngine()
         {
             StringBuilder status_messages = new StringBuilder();
@@ -177,7 +170,7 @@ namespace Engines
 
         public void StartEngine()
         {
-            if(!IsRunning)
+            if (!IsRunning)
             {
                 Console.WriteLine("Checking Engine No. {0} ", EngineNumber);
                 if (IsWorking)
@@ -188,13 +181,12 @@ namespace Engines
                 }
                 else
                 {
-                    Console.WriteLine("Engine No. {0} has a problem. Checking engine...", EngineNumber);
-                    foreach(string s in CheckEngine())
+                    Console.WriteLine("Engine No. {0} has a problem...", EngineNumber);
+                    foreach (string s in CheckEngine())
                     {
                         Console.WriteLine(s);
                     }
                 }
-
             }
             else
             {
@@ -202,7 +194,7 @@ namespace Engines
             }
         } // end StartEngine()
 
-        
+
         public void StopEngine()
         {
             IsRunning = false;

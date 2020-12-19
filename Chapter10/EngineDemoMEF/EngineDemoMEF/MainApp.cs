@@ -1,63 +1,52 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.Composition; // added
-using System.ComponentModel.Composition.Hosting; // added
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Engines;
+using System;
 
 
 namespace EngineTester
 {
     public class MainApp
     {
-
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
+            Console.WriteLine("Instantiating Engine Object...");
             Engine e1 = new Engine(1);
-            Console.WriteLine("Oil Pump Engine Number: {0}", e1.OilPumpEngineNumber);
-            Console.WriteLine("Fuel Pump Engine Number: {0}", e1.FuelPumpEngineNumber);
+            Console.WriteLine("----------------------------------------------------");
+            Console.WriteLine("Reading Part Engine Numbers...");
+            Console.WriteLine("OilPump Engine Number: {0}", e1.OilPumpEngineNumber);
+            Console.WriteLine("FuelPump Engine Number: {0}", e1.FuelPumpEngineNumber);
             Console.WriteLine("Compressor Engine Number: {0}", e1.CompressorEngineNumber);
-            Console.WriteLine("Temperature Sensor Engine Number: {0}", e1.TemperatureSensorEngineNumber);
-            Console.WriteLine("Oxygen Sensor Engine Number: {0}", e1.OxygenSensorEngineNumber);
+            Console.WriteLine("TemperatureSensor Engine Number: {0}", e1.TemperatureSensorEngineNumber);
+            Console.WriteLine("OxygenSensor Engine Number: {0}", e1.OxygenSensorEngineNumber);
+            Console.WriteLine("----------------------------------------------------");
 
-            Console.WriteLine("\nStarting Engine Number: {0}", e1.EngineNumber);
-            Console.WriteLine("Press any key to continue...");
+            Console.WriteLine("\nPress Enter to Start Engine Number: {0}", e1.EngineNumber);
             Console.ReadKey();
 
             if (e1.IsWorking) e1.StartEngine();
 
-            Console.WriteLine("\nSetting FuelPump Fault...");
-            Console.WriteLine("Press any key to continue...");
+            Console.WriteLine("\nPress Enter to Set FuelPump Fault...");
             Console.ReadKey();
 
             e1.IsFuelPumpWorking = false;
 
-            Console.WriteLine("\nTrying to Start Engine Number: {0} with Faulty FuelPump", e1.EngineNumber);
-            Console.WriteLine("Press any key to continue...");
+            Console.WriteLine("\nPress Enter to Try to Start Engine Number: {0} with Faulty FuelPump", e1.EngineNumber);
             Console.ReadKey();
 
             e1.StartEngine();
 
-            Console.WriteLine("\nFixing FuelPump and Restarting Engine...");
-            Console.WriteLine("Press any key to continue...");
+            Console.WriteLine("\nPress Enter to Fix FuelPump and Restart Engine...");
             Console.ReadKey();
 
             e1.IsFuelPumpWorking = true;
             e1.StartEngine();
 
-            Console.WriteLine("\nStopping Engine...");
-            Console.WriteLine("Press any key to continue...");
+            Console.WriteLine("\nPress Enter to Stop Engine...");
             Console.ReadKey();
 
             e1.StopEngine();
 
-            Console.WriteLine("\n\nEngine Demo Complete!");
-            Console.WriteLine("Press any key to continue...");
+            Console.WriteLine("\n\nPress Enter to Exit the Engine Demo...");
             Console.ReadKey();
-
-            // Go to http://aka.ms/dotnet-get-started-console to continue learning how to build a console app! 
         }
     }
 }
