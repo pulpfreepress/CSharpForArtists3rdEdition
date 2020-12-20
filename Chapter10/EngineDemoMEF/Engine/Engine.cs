@@ -1,15 +1,13 @@
 ﻿using EngineParts;
 using System;
-using System.ComponentModel.Composition; // added
-using System.ComponentModel.Composition.Hosting; // added
+using System.ComponentModel.Composition;
+using System.ComponentModel.Composition.Hosting;
 using System.Text;
 
 
-namespace Engines
-{
+namespace Engines {
     [Export(typeof(Engine))]
-    public class Engine
-    {
+    public class Engine {
         /***** Parts *****/
         [Import(typeof(OilPump))]
         public OilPump _oilPump;
@@ -29,125 +27,102 @@ namespace Engines
         private CompositionContainer _container;
 
         /***** Properties *****/
-        [Export]
-        public int EngineNumber
-        {
+        [Export] // Must be exported because it's used as a parameter to part constructors
+        public int EngineNumber {
             get;
             set;
         }
 
-        public bool IsRunning
-        {
+        public bool IsRunning {
             get;
             set;
         } = false;
 
-        public bool IsWorking
-        {
-            get
-            {
+        public bool IsWorking {
+            get {
                 return _compressor.IsWorking && _oilPump.IsWorking && _fuelPump.IsWorking
                    && _temperatureSensor.IsWorking && _oxygenSensor.IsWorking;
             }
         }
 
-        public int OilPumpEngineNumber
-        {
+        public int OilPumpEngineNumber {
             get { return _oilPump.EngineNumber; }
         }
 
-        public int FuelPumpEngineNumber
-        {
+        public int FuelPumpEngineNumber {
             get { return _fuelPump.EngineNumber; }
         }
 
-        public int CompressorEngineNumber
-        {
+        public int CompressorEngineNumber {
             get { return _compressor.EngineNumber; }
         }
 
-        public int TemperatureSensorEngineNumber
-        {
+        public int TemperatureSensorEngineNumber {
             get { return _temperatureSensor.EngineNumber; }
         }
 
-        public int OxygenSensorEngineNumber
-        {
+        public int OxygenSensorEngineNumber {
             get { return _oxygenSensor.EngineNumber; }
         }
 
-        public bool IsOilPumpWorking
-        {
+        public bool IsOilPumpWorking {
             get { return _oilPump.IsWorking; }
-            set
-            {
+            set {
                 _oilPump.IsWorking = value;
                 if (!IsWorking) StopEngine();
             }
         }
 
-        public bool IsFuelPumpWorking
-        {
+        public bool IsFuelPumpWorking {
             get { return _fuelPump.IsWorking; }
-            set
-            {
+            set {
                 _fuelPump.IsWorking = value;
                 if (!IsWorking) StopEngine();
             }
         }
 
-        public bool IsCompressorWorking
-        {
+        public bool IsCompressorWorking {
             get { return _compressor.IsWorking; }
-            set
-            {
+            set {
                 _compressor.IsWorking = value;
                 if (!IsWorking) StopEngine();
             }
         }
 
-        public bool IsTemperatureSensorWorking
-        {
+        public bool IsTemperatureSensorWorking {
             get { return _temperatureSensor.IsWorking; }
-            set
-            {
+            set {
                 _temperatureSensor.IsWorking = value;
                 if (!IsWorking) StopEngine();
             }
         }
 
-        public bool IsOxygenSensorWorking
-        {
+        public bool IsOxygenSensorWorking {
             get { return _oxygenSensor.IsWorking; }
-            set
-            {
+            set {
                 _oxygenSensor.IsWorking = value;
                 if (!IsWorking) StopEngine();
             }
         }
 
         /***** Constructor *****/
-        public Engine(int engine_number)
-        {
+        public Engine(int engine_number) {
             EngineNumber = engine_number;
-            var catalog = new AggregateCatalog();
-            catalog.Catalogs.Add(new AssemblyCatalog(typeof(OilPump).Assembly));
+            // Check runtime directory for DLLs that contain parts with matching imports
+            var catalog = new DirectoryCatalog(".");
+            // Create the catalog
             _container = new CompositionContainer(catalog);
 
-            try
-            {
+            try {
                 this._container.ComposeParts(this);
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 Console.WriteLine(e);
             }
         } // end constructor
 
 
 
-        public string[] CheckEngine()
-        {
+        public string[] CheckEngine() {
             StringBuilder status_messages = new StringBuilder();
             if (_oilPump.IsWorking) status_messages.Append("OilPump -> Working,");
             else status_messages.Append("OilPump -> Falty,");
@@ -168,35 +143,26 @@ namespace Engines
         }
 
 
-        public void StartEngine()
-        {
-            if (!IsRunning)
-            {
+        public void StartEngine() {
+            if (!IsRunning) {
                 Console.WriteLine("Checking Engine No. {0} ", EngineNumber);
-                if (IsWorking)
-                {
+                if (IsWorking) {
                     Console.WriteLine("Starting Engine No. {0} ", EngineNumber);
                     IsRunning = true;
                     Console.WriteLine("Engine No. {0} is running!", EngineNumber);
-                }
-                else
-                {
+                } else {
                     Console.WriteLine("Engine No. {0} has a problem...", EngineNumber);
-                    foreach (string s in CheckEngine())
-                    {
+                    foreach (string s in CheckEngine()) {
                         Console.WriteLine(s);
                     }
                 }
-            }
-            else
-            {
+            } else {
                 Console.WriteLine("Engine No. {0} is already running!", EngineNumber);
             }
         } // end StartEngine()
 
 
-        public void StopEngine()
-        {
+        public void StopEngine() {
             IsRunning = false;
             Console.WriteLine("Engine No. {0} is shut down.", EngineNumber);
         }

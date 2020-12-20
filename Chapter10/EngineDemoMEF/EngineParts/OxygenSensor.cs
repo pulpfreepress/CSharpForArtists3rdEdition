@@ -1,39 +1,31 @@
 ﻿using System;
-using System.ComponentModel.Composition; // added
+using System.ComponentModel.Composition;
 
-namespace EngineParts
-{
+namespace EngineParts {
     [Export(typeof(OxygenSensor))]
-    public class OxygenSensor
-    {
-        public int EngineNumber
-        {
+    public class OxygenSensor {
+        public int EngineNumber {
             get;
             set;
         }
 
-        public PartStatus Status
-        {
+        public PartStatus Status {
             get;
             set;
         } = PartStatus.WORKING;
 
-        public bool IsWorking
-        {
-            get
-            {
+        public bool IsWorking {
+            get {
                 return Status == PartStatus.WORKING ? true : false;
             }
-            set
-            {
+            set {
                 if (value) Status = PartStatus.WORKING;
                 else Status = PartStatus.NOT_WORKING;
             }
         }
 
         [ImportingConstructor]
-        public OxygenSensor(int engine_number)
-        {
+        public OxygenSensor(int engine_number) {
             EngineNumber = engine_number;
             Console.WriteLine(this.GetType().Name + " Created!");
         }

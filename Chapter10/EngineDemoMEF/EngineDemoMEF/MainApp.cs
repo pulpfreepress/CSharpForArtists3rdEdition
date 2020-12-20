@@ -2,12 +2,9 @@ using Engines;
 using System;
 
 
-namespace EngineTester
-{
-    public class MainApp
-    {
-        private static void Main(string[] args)
-        {
+namespace EngineTester {
+    public class MainApp {
+        private static void Main(string[] args) {
             Console.WriteLine("Instantiating Engine Object...");
             Engine e1 = new Engine(1);
             Console.WriteLine("----------------------------------------------------");
