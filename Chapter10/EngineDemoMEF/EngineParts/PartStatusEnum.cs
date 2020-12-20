@@ -1,3 +1,3 @@
 ﻿namespace EngineParts {
-    public enum PartStatus { NOT_WORKING, WORKING }
+	public enum PartStatus { NOT_WORKING, WORKING }
 }
