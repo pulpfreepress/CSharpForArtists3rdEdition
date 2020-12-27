@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.1300
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EngineTester", "EngineDemoMEF\EngineTester.csproj", "{9D596C3E-3E95-47AF-817A-8DA56BF04FF9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EngineTester", "EngineTester\EngineTester.csproj", "{9D596C3E-3E95-47AF-817A-8DA56BF04FF9}"
 	ProjectSection(ProjectDependencies) = postProject
 		{8F0E050B-83E9-417E-BAEF-79B51F0A7DEC} = {8F0E050B-83E9-417E-BAEF-79B51F0A7DEC}
 		{6676A743-042C-41C2-ACB3-57773FCDD732} = {6676A743-042C-41C2-ACB3-57773FCDD732}
