@@ -1,19 +1,19 @@
-﻿using EngineParts;
-using Common;
+﻿using Common;
+using EngineParts;
 using System;
-using System.Collections.Generic;
 using System.Reflection;
+using System.Linq;
+using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
-using System.ComponentModel.Composition.ReflectionModel;
 using System.Text;
 
 
 namespace Engines {
 	[Export]
 	public class Engine {
+
 		/***** Part Fields *****/
-		
 		private IPart _oilPump;
 		private IPart _fuelPump;
 		private IPart _compressor;
@@ -23,53 +23,44 @@ namespace Engines {
 		/***** Parts Container *****/
 		private CompositionContainer _container;
 
-		/**** Parts Collection *****/
-		private HashSet<IPart> _parts;
-
 		/***** Part Properties *****/
-
-		[Import("IPart", typeof(OilPump))]
+		[Import(typeof(OilPump))]
 		public IPart OilPump {
-			get { return _oilPump;  }
+			get { return _oilPump; }
 			set {
 				_oilPump = value;
-				_parts.Add(_oilPump);
 			}
 		}
 
-		[Import("IPart", typeof(FuelPump))]
+		[Import(typeof(FuelPump))]
 		public IPart FuelPump {
 			get { return _fuelPump; }
 			set {
 				_fuelPump = value;
-				_parts.Add(_fuelPump);
 			}
 		}
 
-		[Import("IPart", typeof(Compressor))]
+		[Import(typeof(Compressor))]
 		public IPart Compressor {
 			get { return _compressor; }
 			set {
 				_compressor = value;
-				_parts.Add(_compressor);
 			}
 		}
 
-		[Import("IPart", typeof(TemperatureSensor))]
+		[Import(typeof(TemperatureSensor))]
 		public IPart TemperatureSensor {
 			get { return _temperatureSensor; }
 			set {
 				_temperatureSensor = value;
-				_parts.Add(_temperatureSensor);
 			}
 		}
 
-		[Import("IPart", typeof(OxygenSensor))]
+		[Import(typeof(OxygenSensor))]
 		public IPart OxygenSensor {
 			get { return _oxygenSensor; }
 			set {
 				_oxygenSensor = value;
-				_parts.Add(_oxygenSensor);
 			}
 		}
 
@@ -156,7 +147,6 @@ namespace Engines {
 		[ImportingConstructor]
 		public Engine(int engine_number) {
 			EngineNumber = engine_number;
-			_parts = new HashSet<IPart>();
 			// Check runtime directory for DLLs that contain parts with matching imports
 			var catalog = new DirectoryCatalog(".");
 			// Create the catalog
@@ -171,32 +161,35 @@ namespace Engines {
 
 
 
-		public string[] CheckEngine() {
+		public (bool IsWorking, string[] StatusMessages) CheckEngine() {
 			Console.WriteLine("CheckEngine() method called...");
 			StringBuilder status_messages = new StringBuilder();
+			bool working = true;
 
-			foreach(IPart part in _parts) {
-				if (part.IsWorking) {
-						status_messages.Append(part + " is working!,");
-				} else {
-					status_messages.Append(part + " is faulty!,");
+			foreach(PropertyInfo prop in this.GetType().GetProperties()) {
+				if(prop.PropertyType == typeof(IPart)) {
+					if (((IPart)prop.GetValue(this)).IsWorking){
+						status_messages.Append(prop.Name + " -> working!,");
+					} else {
+						status_messages.Append(prop.Name + " -> faulty!,");
+						working = false;
+					}
 				}
 			}
-				
-			return status_messages.ToString().Split(',');
+			return (working, status_messages.ToString().Split(','));
 		}
 
 
 		public void StartEngine() {
 			if (!IsRunning) {
 				Console.WriteLine("Checking Engine No. {0} ", EngineNumber);
-				if (IsWorking) {
+				if (CheckEngine().IsWorking) {
 					Console.WriteLine("Starting Engine No. {0} ", EngineNumber);
 					IsRunning = true;
 					Console.WriteLine("Engine No. {0} is running!", EngineNumber);
 				} else {
 					Console.WriteLine("Engine No. {0} has a problem...", EngineNumber);
-					foreach (string s in CheckEngine()) {
+					foreach (string s in CheckEngine().StatusMessages) {
 						Console.WriteLine(s);
 					}
 				}

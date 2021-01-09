@@ -4,8 +4,8 @@ using System.ComponentModel.Composition;
 
 namespace EngineParts {
 
-	[Export("IPart", typeof(FuelPump))]
-	
+	[Export(typeof(IPart))]
+	[Export(typeof(FuelPump))]
 	public class FuelPump : IPart {
 		public int EngineNumber {
 			get;
