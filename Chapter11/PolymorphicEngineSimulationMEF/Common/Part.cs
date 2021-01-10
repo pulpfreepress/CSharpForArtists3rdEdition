@@ -1,5 +1,4 @@
 ﻿namespace Common {
-
 	public abstract class Part : IPart {
 
 		public string Name {

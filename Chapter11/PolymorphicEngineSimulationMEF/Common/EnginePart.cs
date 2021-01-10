@@ -2,7 +2,7 @@
 
 namespace Common {
 
-	public class EnginePart : Part, IManagedPart {
+	public abstract class EnginePart : Part, IManagedPart {
 
 		public IEngine RegisteredEngine {
 			get;

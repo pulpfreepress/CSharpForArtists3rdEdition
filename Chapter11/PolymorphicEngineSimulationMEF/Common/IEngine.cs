@@ -15,9 +15,7 @@
 		}
 
 		(bool IsWorking, string[] StatusMessages) CheckEngine();
-
 		void StartEngine();
-
 		void StopEngine();
 	}
 }

@@ -1,5 +1,4 @@
 ﻿namespace Common {
-
 	public interface IPart {
 
 		string Name {
