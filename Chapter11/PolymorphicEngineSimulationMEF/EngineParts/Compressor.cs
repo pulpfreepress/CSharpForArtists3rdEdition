@@ -1,10 +1,9 @@
-﻿using System;
-using Common;
+﻿using Common;
+using System;
 using System.ComponentModel.Composition;
 
 namespace EngineParts {
 
-	[Export(typeof(IPart))]
 	[Export(typeof(Compressor))]
 	public class Compressor : IPart {
 		public int EngineNumber {
@@ -31,6 +30,10 @@ namespace EngineParts {
 		public Compressor(int engine_number) {
 			EngineNumber = engine_number;
 			Console.WriteLine(this.GetType().Name + " Created!");
+		}
+
+		public override string ToString() {
+			return "Compressor";
 		}
 	}
 }

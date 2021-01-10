@@ -12,7 +12,7 @@ namespace EngineTester {
 			Console.WriteLine("OilPump Engine Number: {0}", e1.OilPumpEngineNumber);
 			Console.WriteLine("FuelPump Engine Number: {0}", e1.FuelPumpEngineNumber);
 			Console.WriteLine("Compressor Engine Number: {0}", e1.CompressorEngineNumber);
-			Console.WriteLine("TemperatureSensor Engine Number: {0}", 
+			Console.WriteLine("TemperatureSensor Engine Number: {0}",
 				e1.TemperatureSensorEngineNumber);
 			Console.WriteLine("OxygenSensor Engine Number: {0}", e1.OxygenSensorEngineNumber);
 			Console.WriteLine("----------------------------------------------------");
@@ -20,14 +20,14 @@ namespace EngineTester {
 			Console.WriteLine("\nPress Enter to Start Engine Number: {0}", e1.EngineNumber);
 			Console.ReadKey();
 
-			if (e1.IsWorking) e1.StartEngine();
+			e1.StartEngine();
 
 			Console.WriteLine("\nPress Enter to Set FuelPump Fault...");
 			Console.ReadKey();
 
 			e1.IsFuelPumpWorking = false;
 
-			Console.WriteLine("\nPress Enter to Try to Start Engine Number: " 
+			Console.WriteLine("\nPress Enter to Try to Start Engine Number: "
 				+ "{0} with Faulty FuelPump", e1.EngineNumber);
 			Console.ReadKey();
 
