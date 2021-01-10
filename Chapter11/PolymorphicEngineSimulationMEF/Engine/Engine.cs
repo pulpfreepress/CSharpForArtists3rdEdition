@@ -11,18 +11,18 @@ using System.Text;
 namespace Engines {
 
 	[Export]
-	public class Engine {
+	public class Engine : IEngine {
 
 		/***** Private Part Fields *****/
-		private IPart _oilPump;
-		private IPart _fuelPump;
-		private IPart _compressor;
-		private IPart _oxygenSensor;
-		private IPart _temperatureSensor;
+		private EnginePart _oilPump;
+		private EnginePart _fuelPump;
+		private EnginePart _compressor;
+		private EnginePart _oxygenSensor;
+		private EnginePart _temperatureSensor;
 
 		/***** Part Properties *****/
 		[Import(typeof(OilPump))]
-		public IPart OilPump {
+		public EnginePart OilPump {
 			get { return _oilPump; }
 			set {
 				_oilPump = value;
@@ -30,7 +30,7 @@ namespace Engines {
 		}
 
 		[Import(typeof(FuelPump))]
-		public IPart FuelPump {
+		public EnginePart FuelPump {
 			get { return _fuelPump; }
 			set {
 				_fuelPump = value;
@@ -38,7 +38,7 @@ namespace Engines {
 		}
 
 		[Import(typeof(Compressor))]
-		public IPart Compressor {
+		public EnginePart Compressor {
 			get { return _compressor; }
 			set {
 				_compressor = value;
@@ -46,7 +46,7 @@ namespace Engines {
 		}
 
 		[Import(typeof(TemperatureSensor))]
-		public IPart TemperatureSensor {
+		public EnginePart TemperatureSensor {
 			get { return _temperatureSensor; }
 			set {
 				_temperatureSensor = value;
@@ -54,7 +54,7 @@ namespace Engines {
 		}
 
 		[Import(typeof(OxygenSensor))]
-		public IPart OxygenSensor {
+		public EnginePart OxygenSensor {
 			get { return _oxygenSensor; }
 			set {
 				_oxygenSensor = value;
@@ -65,10 +65,10 @@ namespace Engines {
 		private CompositionContainer _container;
 
 		/***** List of IParts *****/
-		private List<IPart> _parts;
+		private List<EnginePart> _parts;
 
 		/***** Public Properties *****/
-		[Export] // Must be exported because it's used as a parameter to part constructors
+		[Export]
 		public int EngineNumber {
 			get;
 			set;
@@ -83,67 +83,29 @@ namespace Engines {
 			get {
 				return CheckEngine().IsWorking;
 			}
+
 		}
 
 		public int OilPumpEngineNumber {
-			get { return _oilPump.EngineNumber; }
+			get { return _oilPump.RegisteredEngine.EngineNumber; }
 		}
 
 		public int FuelPumpEngineNumber {
-			get { return _fuelPump.EngineNumber; }
+			get { return _fuelPump.RegisteredEngine.EngineNumber; }
 		}
 
 		public int CompressorEngineNumber {
-			get { return _compressor.EngineNumber; }
+			get { return _compressor.RegisteredEngine.EngineNumber; }
 		}
 
 		public int TemperatureSensorEngineNumber {
-			get { return _temperatureSensor.EngineNumber; }
+			get { return _temperatureSensor.RegisteredEngine.EngineNumber; }
 		}
 
 		public int OxygenSensorEngineNumber {
-			get { return _oxygenSensor.EngineNumber; }
+			get { return _oxygenSensor.RegisteredEngine.EngineNumber; }
 		}
 
-		public bool IsOilPumpWorking {
-			get { return OilPump.IsWorking; }
-			set {
-				OilPump.IsWorking = value;
-				if (!OilPump.IsWorking) StopEngine();
-			}
-		}
-
-		public bool IsFuelPumpWorking {
-			get { return FuelPump.IsWorking; }
-			set {
-				FuelPump.IsWorking = value;
-				if (!FuelPump.IsWorking) StopEngine();
-			}
-		}
-
-		public bool IsCompressorWorking {
-			get { return Compressor.IsWorking; }
-			set {
-				Compressor.IsWorking = value;
-				if (!Compressor.IsWorking) StopEngine();
-			}
-		}
-
-		public bool IsTemperatureSensorWorking {
-			get { return TemperatureSensor.IsWorking; }
-			set {
-				TemperatureSensor.IsWorking = value;
-				if (!TemperatureSensor.IsWorking) StopEngine();
-			}
-		}
-
-		public bool IsOxygenSensorWorking {
-			get { return OxygenSensor.IsWorking; }
-			set {
-				OxygenSensor.IsWorking = value;
-				if (!OxygenSensor.IsWorking) StopEngine();
-			}
-		}
 
 		/***** Constructor *****/
 		[ImportingConstructor]
@@ -156,6 +118,9 @@ namespace Engines {
 				_container = new CompositionContainer(catalog);
 				this._container.ComposeParts(this);
 				_parts = GetParts();
+				foreach (EnginePart part in _parts) {
+					part.RegisteredEngine = this;
+				}
 			} catch (Exception e) {
 				Console.WriteLine(e);
 			}
@@ -167,7 +132,7 @@ namespace Engines {
 			StringBuilder status_messages = new StringBuilder();
 			bool working = true;
 			// Check each engine property
-			foreach (IPart part in _parts) {
+			foreach (EnginePart part in _parts) {
 				if (part.IsWorking) {
 					status_messages.Append(part + " -> working!,");
 				} else {
@@ -181,15 +146,14 @@ namespace Engines {
 
 		public void StartEngine() {
 			Console.WriteLine("Checking Engine No. {0} ", EngineNumber);
-			var (isworking, statusmessages) = CheckEngine();
 			if (!IsRunning) {
-				if (isworking) {
+				if (IsWorking) {
 					Console.WriteLine("Starting Engine No. {0} ", EngineNumber);
 					IsRunning = true;
 					Console.WriteLine("Engine No. {0} is running!", EngineNumber);
 				} else {
 					Console.WriteLine("Engine No. {0} has a problem...", EngineNumber);
-					foreach (string s in statusmessages) {
+					foreach (string s in CheckEngine().StatusMessages) {
 						Console.WriteLine(s);
 					}
 				}
@@ -202,17 +166,14 @@ namespace Engines {
 		public void StopEngine() {
 			Console.WriteLine("Stopping Engine No. {0} ", EngineNumber);
 			IsRunning = false;
-			foreach (string s in CheckEngine().StatusMessages) {
-				Console.WriteLine(s);
-			}
 			Console.WriteLine("Engine No. {0} is shut down.", EngineNumber);
 		}
 
-		private List<IPart> GetParts() {
-			List<IPart> parts = new List<IPart>();
+		private List<EnginePart> GetParts() {
+			List<EnginePart> parts = new List<EnginePart>();
 			foreach (PropertyInfo prop in this.GetType().GetProperties()) {
-				if (prop.PropertyType == typeof(IPart)) {
-					parts.Add((IPart)prop.GetValue(this));
+				if (prop.PropertyType == typeof(EnginePart)) {
+					parts.Add((EnginePart)prop.GetValue(this));
 				}
 			}
 			return parts;

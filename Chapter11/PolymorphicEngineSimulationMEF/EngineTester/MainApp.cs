@@ -25,7 +25,7 @@ namespace EngineTester {
 			Console.WriteLine("\nPress Enter to Set FuelPump Fault...");
 			Console.ReadKey();
 
-			e1.IsFuelPumpWorking = false;
+			e1.FuelPump.SetFault();
 
 			Console.WriteLine("\nPress Enter to Try to Start Engine Number: "
 				+ "{0} with Faulty FuelPump", e1.EngineNumber);
@@ -36,7 +36,7 @@ namespace EngineTester {
 			Console.WriteLine("\nPress Enter to Fix FuelPump and Restart Engine...");
 			Console.ReadKey();
 
-			e1.IsFuelPumpWorking = true;
+			e1.FuelPump.ClearFault();
 			e1.StartEngine();
 
 			Console.WriteLine("\nPress Enter to Stop Engine...");

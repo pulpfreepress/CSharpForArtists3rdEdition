@@ -5,35 +5,11 @@ using System.ComponentModel.Composition;
 namespace EngineParts {
 
 	[Export(typeof(OxygenSensor))]
-	public class OxygenSensor : IPart {
-		public int EngineNumber {
-			get;
-			set;
-		}
-
-		public PartStatus Status {
-			get;
-			set;
-		} = PartStatus.WORKING;
-
-		public bool IsWorking {
-			get {
-				return Status == PartStatus.WORKING ? true : false;
-			}
-			set {
-				if (value) Status = PartStatus.WORKING;
-				else Status = PartStatus.NOT_WORKING;
-			}
-		}
+	public class OxygenSensor : EnginePart {
 
 		[ImportingConstructor]
-		public OxygenSensor(int engine_number) {
-			EngineNumber = engine_number;
+		public OxygenSensor() : base("OxygenSensor") {
 			Console.WriteLine(this.GetType().Name + " Created!");
-		}
-
-		public override string ToString() {
-			return "OxygenSensor";
 		}
 	}
 }

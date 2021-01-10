@@ -42,7 +42,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EnginePart.cs" />
+    <Compile Include="IManagedPart.cs" />
+    <Compile Include="IEngine.cs" />
     <Compile Include="IPart.cs" />
+    <Compile Include="Part.cs" />
     <Compile Include="PartStatusEnum.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

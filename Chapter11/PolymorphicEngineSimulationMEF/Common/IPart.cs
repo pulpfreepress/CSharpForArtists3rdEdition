@@ -1,7 +1,8 @@
 ﻿namespace Common {
 
 	public interface IPart {
-		int EngineNumber {
+
+		string Name {
 			get;
 			set;
 		}
