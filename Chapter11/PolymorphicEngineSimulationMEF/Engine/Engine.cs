@@ -13,59 +13,37 @@ namespace Engines {
 	[Export]
 	public class Engine : IEngine {
 
-		/***** Private Part Fields *****/
-		private EnginePart _oilPump;
-		private EnginePart _fuelPump;
-		private EnginePart _compressor;
-		private EnginePart _oxygenSensor;
-		private EnginePart _temperatureSensor;
 
 		/***** Part Properties *****/
 		[Import(typeof(OilPump))]
 		public EnginePart OilPump {
-			get { return _oilPump; }
-			set {
-				_oilPump = value;
-			}
+			get;
+			set;
 		}
 
 		[Import(typeof(FuelPump))]
 		public EnginePart FuelPump {
-			get { return _fuelPump; }
-			set {
-				_fuelPump = value;
-			}
+			get;
+			set;
 		}
 
 		[Import(typeof(Compressor))]
 		public EnginePart Compressor {
-			get { return _compressor; }
-			set {
-				_compressor = value;
-			}
+			get;
+			set;
 		}
 
 		[Import(typeof(TemperatureSensor))]
 		public EnginePart TemperatureSensor {
-			get { return _temperatureSensor; }
-			set {
-				_temperatureSensor = value;
-			}
+			get;
+			set;
 		}
 
 		[Import(typeof(OxygenSensor))]
 		public EnginePart OxygenSensor {
-			get { return _oxygenSensor; }
-			set {
-				_oxygenSensor = value;
-			}
+			get;
+			set;
 		}
-
-		/***** MEF Parts Container *****/
-		private CompositionContainer _container;
-
-		/***** List of EngineParts *****/
-		private List<EnginePart> _parts;
 
 		/***** Public Properties *****/
 		[Export]
@@ -85,27 +63,31 @@ namespace Engines {
 			}
 		}
 
-
 		public int OilPumpEngineNumber {
-			get { return _oilPump.RegisteredEngine.EngineNumber; }
+			get { return OilPump.RegisteredEngine.EngineNumber; }
 		}
 
 		public int FuelPumpEngineNumber {
-			get { return _fuelPump.RegisteredEngine.EngineNumber; }
+			get { return FuelPump.RegisteredEngine.EngineNumber; }
 		}
 
 		public int CompressorEngineNumber {
-			get { return _compressor.RegisteredEngine.EngineNumber; }
+			get { return Compressor.RegisteredEngine.EngineNumber; }
 		}
 
 		public int TemperatureSensorEngineNumber {
-			get { return _temperatureSensor.RegisteredEngine.EngineNumber; }
+			get { return TemperatureSensor.RegisteredEngine.EngineNumber; }
 		}
 
 		public int OxygenSensorEngineNumber {
-			get { return _oxygenSensor.RegisteredEngine.EngineNumber; }
+			get { return OxygenSensor.RegisteredEngine.EngineNumber; }
 		}
 
+		/***** MEF Parts Container *****/
+		private CompositionContainer _container;
+
+		/***** List of EngineParts *****/
+		private List<EnginePart> _parts;
 
 		/***** Constructor *****/
 		[ImportingConstructor]
