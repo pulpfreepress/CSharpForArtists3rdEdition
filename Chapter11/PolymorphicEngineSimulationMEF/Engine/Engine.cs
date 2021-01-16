@@ -13,7 +13,6 @@ namespace Engines {
 	[Export]
 	public class Engine : IEngine {
 
-
 		/***** Part Properties *****/
 		[Import(typeof(OilPump))]
 		public EnginePart OilPump {
