@@ -64,7 +64,7 @@ namespace Engines {
 		/***** MEF Parts Container *****/
 		private CompositionContainer _container;
 
-		/***** List of IParts *****/
+		/***** List of EngineParts *****/
 		private List<EnginePart> _parts;
 
 		/***** Public Properties *****/
@@ -83,8 +83,8 @@ namespace Engines {
 			get {
 				return CheckEngine().IsWorking;
 			}
-
 		}
+
 
 		public int OilPumpEngineNumber {
 			get { return _oilPump.RegisteredEngine.EngineNumber; }
