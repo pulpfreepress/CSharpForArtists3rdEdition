@@ -20,6 +20,22 @@ namespace PresentationLayer {
 	public partial class MainWindow : Window {
 		public MainWindow() {
 			InitializeComponent();
+			
 		}
+
+		private void Window_Loaded(object sender, EventArgs e) {
+			try {
+				Window intro = new Windows.Intro();
+				intro.Owner = this;
+				intro.ShowDialog();
+			} catch (Exception) {
+				Console.WriteLine("Problem loading Intro Window");
+			}
+		}
+
+
+
+
+
 	}
 }
