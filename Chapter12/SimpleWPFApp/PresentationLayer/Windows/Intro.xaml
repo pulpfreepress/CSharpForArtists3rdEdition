@@ -5,12 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PresentationLayer.Windows"
         mc:Ignorable="d"
-        Background="Black"
-        Title="Intro" Height="250" Width="400" WindowStartupLocation="CenterOwner" ShowInTaskbar="False" WindowStyle="None" MouseDown="Window_MouseDown" >
+        Background="Transparent"
+        ResizeMode="NoResize"
+        Title="Simple WPF Splash Screen" 
+        Height="225" Width="400" 
+        WindowStartupLocation="CenterOwner" 
+        ShowInTaskbar="False" 
+        Topmost="True"
+        WindowStyle="None" 
+        MouseDown="Window_MouseDown" >
     <Window.Effect>
         <DropShadowEffect/>
     </Window.Effect>
     <Grid>
-        <MediaElement Source="Videos/SplashScreenTwo.mp4"  />
+        <MediaElement x:Name="SplashMovie" LoadedBehavior="Manual"/>
     </Grid>
 </Window>

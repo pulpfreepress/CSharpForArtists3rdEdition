@@ -37,6 +37,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -104,7 +105,7 @@
   <ItemGroup />
   <ItemGroup>
     <Resource Include="Images\jb1.jpg" />
-    <Content Include="Videos\SplashScreenTwo.mp4">
+    <Content Include="Videos\SplashScreen.mp4">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

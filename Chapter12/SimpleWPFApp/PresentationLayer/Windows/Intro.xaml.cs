@@ -21,7 +21,10 @@ namespace PresentationLayer.Windows
     {
         public Intro()
         {
-            InitializeComponent();
+						InitializeComponent();
+						SplashMovie.Source = new Uri(Properties.Resources.splash_movie, UriKind.RelativeOrAbsolute);
+						SplashMovie.Play();
+            
 						
         }
 
