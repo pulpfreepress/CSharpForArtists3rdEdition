@@ -22,7 +22,6 @@ namespace PresentationLayer {
 	public partial class MainWindow : Window {
 		public MainWindow() {
 			InitializeComponent();
-			
 		}
 
 		private void Window_Loaded(object sender, EventArgs e) {
