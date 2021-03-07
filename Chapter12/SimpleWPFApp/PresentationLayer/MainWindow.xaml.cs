@@ -1,19 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Threading;
 using System.Windows;
-using System.Drawing;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace PresentationLayer {
 	/// <summary>
@@ -36,9 +24,12 @@ namespace PresentationLayer {
 			ShowIntroWindow();
 		}
 
-
 		private void Goto_PulpFreePress(object sender, EventArgs e) {
-					System.Diagnostics.Process.Start(@"https://pulpfreepress.com");
+			System.Diagnostics.Process.Start(@"https://pulpfreepress.com");
+		}
+
+		private void Window_MouseDown(object sender, EventArgs e) {
+			ShowSplashImage();
 		}
 
 		private void ShowIntroWindow() {
@@ -51,21 +42,17 @@ namespace PresentationLayer {
 			}
 		}
 
-
 		private void ShowSplashImage() {
 			BitmapImage img = new BitmapImage();
 			img.BeginInit();
-			img.UriSource = new Uri((string)Application.Current.Resources["splash_image"], UriKind.RelativeOrAbsolute);
+			img.UriSource = new Uri((string)Application.Current.Resources["splash_image"],
+											UriKind.RelativeOrAbsolute);
 			img.EndInit();
 			SplashScreen sc = new SplashScreen(img.UriSource.ToString());
-			sc.Show(false, true);
+			sc.Show(false, true); //autoClose:false, topMost:true
 			Thread.Sleep(600);
 			sc.Close(TimeSpan.FromSeconds(5));
 		}
-
-		
-
-
 
 	} // End class
 }

@@ -14,10 +14,10 @@
         Topmost="True"
         WindowStyle="None" 
         MouseDown="Window_MouseDown" >
-    <Window.Effect>
-        <DropShadowEffect/>
-    </Window.Effect>
-    <Grid>
-        <MediaElement x:Name="SplashMovie" LoadedBehavior="Manual"/>
-    </Grid>
+	<Window.Effect>
+		<DropShadowEffect/>
+	</Window.Effect>
+	<Grid>
+		<MediaElement x:Name="SplashMovie" LoadedBehavior="Manual"/>
+	</Grid>
 </Window>

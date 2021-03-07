@@ -104,7 +104,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Resource Include="Images\jb1.jpg" />
+    <Resource Include="Images\PFP-Banner-Small.png" />
     <Content Include="Videos\SplashScreen.mp4">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

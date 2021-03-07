@@ -5,25 +5,28 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PresentationLayer"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded" >
-    
-    <Grid>
-        <DockPanel>
-            <Menu DockPanel.Dock="Top">
-                <MenuItem Header="_File">
-                    <MenuItem Header="_Open"/>
-                    <MenuItem Header="_Close"/>
-                    <MenuItem Header="_Save"/>
-                </MenuItem>
+        Title="MainWindow" Height="450" Width="800" 
+				WindowStartupLocation="CenterScreen" 
+				Loaded="Window_Loaded"
+				MouseDown="Window_MouseDown">
 
-                <MenuItem Header="_Help">
-                    <MenuItem Header="_About" Click="Show_Intro_Window"/>
-                    <MenuItem Header="_Show Splash Image" Click="Show_Splash_Image"/>
-                    <MenuItem Header="_Pulp Free Press" Click="Goto_PulpFreePress" />
-                </MenuItem>
+	<Grid>
+		<DockPanel>
+			<Menu DockPanel.Dock="Top">
+				<MenuItem Header="_File"> <!-- Alt + F -->
+	
+					<MenuItem Header="_Open"/> <!-- O -->
+					<MenuItem Header="_Close"/> <!-- C -->
+					<MenuItem Header="_Save"/> <!-- S -->
+				</MenuItem>
 
-            </Menu>
-            <StackPanel></StackPanel>
-        </DockPanel>
-    </Grid>
+				<MenuItem Header="_Help"> <!-- Alt + H -->
+					<MenuItem Header="_About" Click="Show_Intro_Window"/> <!-- A -->
+					<MenuItem Header="_Show Splash Image" Click="Show_Splash_Image"/> <!-- S -->
+					<MenuItem Header="_Pulp Free Press" Click="Goto_PulpFreePress" /> <!-- P -->
+				</MenuItem>
+			</Menu>
+			<!-- <StackPanel></StackPanel> -->
+		</DockPanel>
+	</Grid>
 </Window>
