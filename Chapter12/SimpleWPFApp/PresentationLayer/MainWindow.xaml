@@ -5,8 +5,28 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PresentationLayer"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        Title="MainWindow" Height="450" Width="800" 
+				WindowStartupLocation="CenterScreen" 
+				Loaded="Window_Loaded"
+				MouseDown="Window_MouseDown">
+
+	<Grid>
+		<DockPanel>
+			<Menu DockPanel.Dock="Top">
+				<MenuItem Header="_File"> <!-- Alt + F -->
+	
+					<MenuItem Header="_Open"/> <!-- O -->
+					<MenuItem Header="_Close"/> <!-- C -->
+					<MenuItem Header="_Save"/> <!-- S -->
+				</MenuItem>
+
+				<MenuItem Header="_Help"> <!-- Alt + H -->
+					<MenuItem Header="_About" Click="Show_Intro_Window"/> <!-- A -->
+					<MenuItem Header="_Show Splash Image" Click="Show_Splash_Image"/> <!-- S -->
+					<MenuItem Header="_Pulp Free Press" Click="Goto_PulpFreePress" /> <!-- P -->
+				</MenuItem>
+			</Menu>
+			<!-- <StackPanel></StackPanel> -->
+		</DockPanel>
+	</Grid>
 </Window>
